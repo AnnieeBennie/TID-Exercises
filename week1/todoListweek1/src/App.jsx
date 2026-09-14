@@ -8,9 +8,10 @@ function App() {
   ];
 
   return (
-    <>
+    <div className="main-inner">
       <ToDoList firstName="Anna" todos={annasToDoList} />
-    </>
+      <ToDoList firstName="Anna" todos={annasToDoList} />
+    </div>
   );
 }
 

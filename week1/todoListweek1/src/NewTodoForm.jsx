@@ -16,7 +16,9 @@ export default function NewTodoForm({ onAdd }) {
         onChange={(event) => setText(event.target.value)}
         placeholder="New task"
       />
-      <button disabled={text.trim().length === 0}>Add</button>
+      <button id="add-btn" disabled={text.trim().length === 0}>
+        Add
+      </button>
     </form>
   );
 }

@@ -37,7 +37,7 @@ export default function ToDoList({ firstName, todos }) {
   }
 
   return (
-    <>
+    <div className="todo-body">
       <h1>To Do List for {firstName}</h1>
 
       <NewTodoForm onAdd={handleAdd} />
@@ -56,6 +56,6 @@ export default function ToDoList({ firstName, todos }) {
           ))}
         </ul>
       )}
-    </>
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Parse from "parse";
 import NewTodoForm from "./NewTodoForm.jsx";
 import TodoItem from "./TodoItem.jsx";
 import NewListForm from "./NewListForm.jsx";
@@ -9,7 +10,7 @@ import {
   deleteTodo,
 } from "../services/todoService.js";
 
-import { createList } from "../services/listService.js";
+import { createList, fetchLists } from "../services/listService.js";
 
 export default function ToDoList({ userID, userName }) {
   const [todoList, setTodoList] = useState([]);
@@ -19,12 +20,15 @@ export default function ToDoList({ userID, userName }) {
     async function load() {
       const allTodos = await fetchTodos();
       setTodoList(allTodos.filter((todo) => todo.user === userID));
+
+      const allLists = await fetchLists();
+      setLists(allLists);
     }
     load();
   }, [userID]);
 
-  async function handleAdd(newTask) {
-    const created = await createTodo(newTask);
+  async function handleAdd(newTask, list) {
+    const created = await createTodo(newTask, list);
     setTodoList([...todoList, created]);
   }
 
@@ -56,12 +60,13 @@ export default function ToDoList({ userID, userName }) {
       ) : (
         <ul>
           {lists.map((list) => (
-            <li key={list.id}>{list.name}</li>
+            <li key={list.id}>
+              {list.get("name")}
+              <NewTodoForm list={list} onAdd={handleAdd} />
+            </li>
           ))}
         </ul>
       )}
-
-      <NewTodoForm onAdd={handleAdd} />
 
       {todoList.length === 0 ? (
         <p>Nothing to do. Enjoy the afternoon.</p>

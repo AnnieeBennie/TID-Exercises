@@ -5,11 +5,13 @@ const TodoItem = Parse.Object.extend("TodoItem");
 
 function toPlainObject(parseObject) {
   const user = parseObject.get("user");
+  const list = parseObject.get("list");
   return {
     id: parseObject.id,
     text: parseObject.get("text"),
     done: parseObject.get("done"),
     user: user ? user.id : null,
+    list: list ? list.id : null,
   };
 }
 
@@ -20,12 +22,13 @@ export async function fetchTodos() {
   return results.map(toPlainObject);
 }
 
-export async function createTodo(text) {
+export async function createTodo(text, list) {
   const item = new TodoItem();
   const user = Parse.User.current();
   item.set("text", text);
   item.set("done", false);
   item.set("user", user);
+  item.set("list", list);
   item.setACL(new Parse.ACL(user)); // only the owner can read/write this todo
   return toPlainObject(await item.save());
 }

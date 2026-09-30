@@ -1,5 +1,5 @@
 import "./App.css";
-import ToDoList from "./ToDoList.jsx";
+import ToDoList from "./components/ToDoList.jsx";
 import Parse from "parse";
 import { useState } from "react";
 import AuthPage from "./pages/AuthPage.jsx";

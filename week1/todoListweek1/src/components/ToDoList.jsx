@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import NewTodoForm from "./NewTodoForm.jsx";
 import TodoItem from "./TodoItem.jsx";
+import NewListForm from "./NewListForm.jsx";
 import {
   fetchTodos,
   createTodo,
@@ -8,8 +9,11 @@ import {
   deleteTodo,
 } from "../services/todoService.js";
 
+import { createList } from "../services/listService.js";
+
 export default function ToDoList({ userID, userName }) {
   const [todoList, setTodoList] = useState([]);
+  const [lists, setLists] = useState([]);
 
   useEffect(() => {
     async function load() {
@@ -22,6 +26,11 @@ export default function ToDoList({ userID, userName }) {
   async function handleAdd(newTask) {
     const created = await createTodo(newTask);
     setTodoList([...todoList, created]);
+  }
+
+  async function handleAddList(name) {
+    const created = await createList(name);
+    setLists([...lists, created]);
   }
 
   async function handleDelete(idToDelete) {
@@ -40,6 +49,17 @@ export default function ToDoList({ userID, userName }) {
   return (
     <div className="todo-body">
       <h1>To Do List for {userName}</h1>
+
+      <NewListForm onAdd={handleAddList} />
+      {lists.length === 0 ? (
+        <p>No lists yet.</p>
+      ) : (
+        <ul>
+          {lists.map((list) => (
+            <li key={list.id}>{list.name}</li>
+          ))}
+        </ul>
+      )}
 
       <NewTodoForm onAdd={handleAdd} />
 

@@ -8,6 +8,7 @@ import {
   createTodo,
   setTodoDone,
   deleteTodo,
+  fetchTodosForList,
 } from "../services/todoService.js";
 
 import { createList, fetchLists } from "../services/listService.js";
@@ -18,11 +19,17 @@ export default function ToDoList({ userID, userName }) {
 
   useEffect(() => {
     async function load() {
-      const allTodos = await fetchTodos();
-      setTodoList(allTodos.filter((todo) => todo.user === userID));
-
       const allLists = await fetchLists();
       setLists(allLists);
+
+      const allTodos = [];
+
+      for (const list of allLists) {
+        const todos = await fetchTodosForList(list);
+        allTodos.push(...todos);
+      }
+
+      setTodoList(allTodos);
     }
     load();
   }, [userID]);
@@ -61,24 +68,23 @@ export default function ToDoList({ userID, userName }) {
         <ul>
           {lists.map((list) => (
             <li key={list.id}>
-              {list.get("name")}
-              <NewTodoForm list={list} onAdd={handleAdd} />
-            </li>
-          ))}
-        </ul>
-      )}
+              <h2>{list.get("name")}</h2>
 
-      {todoList.length === 0 ? (
-        <p>Nothing to do. Enjoy the afternoon.</p>
-      ) : (
-        <ul>
-          {todoList.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              onToggle={handleToggle}
-              onRemove={handleDelete}
-            />
+              <NewTodoForm list={list} onAdd={handleAdd} />
+
+              <ul>
+                {todoList
+                  .filter((todo) => todo.list === list.id)
+                  .map((todo) => (
+                    <TodoItem
+                      key={todo.id}
+                      todo={todo}
+                      onToggle={handleToggle}
+                      onRemove={handleDelete}
+                    />
+                  ))}
+              </ul>
+            </li>
           ))}
         </ul>
       )}

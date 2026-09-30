@@ -1,20 +1,32 @@
 import "./App.css";
 import ToDoList from "./ToDoList.jsx";
+import Parse from "parse";
+import { useState } from "react";
+import AuthPage from "./pages/AuthPage.jsx";
+
+Parse.initialize(
+  "NQRBNG65tysLi8lBaYBL571QCq68522DQZuPVcLP", //appID
+  "59wvSMXThKvuZb704q3F0bT8q5mRZjjxpyQcfso3", //JavascriptKey
+);
+Parse.serverURL = "https://parseapi.back4app.com"; //api url
 
 function App() {
-  const annasToDoList = [
-    { id: "anna-1", text: "Call the landlord", done: false },
-    { id: "anna-2", text: "Book the dentist", done: false },
-  ];
-
+  const [user, setUser] = useState(Parse.User.current());
+  function handleAuthenticated(loggedInUser) {
+    setUser(loggedInUser);
+  }
+  if (!user) {
+    return <AuthPage onAuthenticated={handleAuthenticated} />;
+  }
+  function handleLogout() {
+    Parse.User.logOut().then(() => setUser(null));
+  }
   return (
     <div className="main-inner">
-      <ToDoList firstName="Anna" todos={annasToDoList} />
-      <ToDoList firstName="Anna" todos={annasToDoList} />
+      <ToDoList userID={user.id} userName={user.getUsername()} />
+      <button onClick={handleLogout}>Logout </button>
     </div>
   );
 }
 
 export default App;
-
-//Exercise 1: add useState to manage the to-do lists for Anna and Konstantina

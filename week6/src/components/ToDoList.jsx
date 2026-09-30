@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import Parse from "parse";
-import NewTodoForm from "./NewTodoForm.jsx";
+import { Link } from "react-router-dom";
 import TodoItem from "./TodoItem.jsx";
 import NewListForm from "./NewListForm.jsx";
 import {
@@ -68,9 +67,9 @@ export default function ToDoList({ userID, userName }) {
         <ul>
           {lists.map((list) => (
             <li key={list.id}>
-              <h2>{list.get("name")}</h2>
-
-              <NewTodoForm list={list} onAdd={handleAdd} />
+              <h2>
+                <Link to={`/lists/${list.id}`}>{list.get("name")}</Link>
+              </h2>
 
               <ul>
                 {todoList

@@ -3,6 +3,8 @@ import ToDoList from "./components/ToDoList.jsx";
 import Parse from "parse";
 import { useState } from "react";
 import AuthPage from "./pages/AuthPage.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ListPage from "./pages/ListPage.jsx";
 
 Parse.initialize(
   "NQRBNG65tysLi8lBaYBL571QCq68522DQZuPVcLP", //appID
@@ -22,10 +24,22 @@ function App() {
     Parse.User.logOut().then(() => setUser(null));
   }
   return (
-    <div className="main-inner">
-      <ToDoList userID={user.id} userName={user.getUsername()} />
-      <button onClick={handleLogout}>Logout </button>
-    </div>
+    <BrowserRouter>
+      <div className="main-inner">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ToDoList userID={user.id} userName={user.getUsername()} />
+            }
+          />
+
+          <Route path="/lists/:listId" element={<ListPage />} />
+        </Routes>
+
+        <button onClick={handleLogout}>Logout</button>
+      </div>
+    </BrowserRouter>
   );
 }
 

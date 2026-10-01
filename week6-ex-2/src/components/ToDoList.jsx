@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Parse from "parse";
 import NewTodoForm from "./NewTodoForm.jsx";
 import TodoItem from "./TodoItem.jsx";
 import NewListForm from "./NewListForm.jsx";

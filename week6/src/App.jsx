@@ -4,14 +4,11 @@ import Parse from "parse";
 import { useState } from "react";
 import AuthPage from "./pages/AuthPage.jsx";
 
-if (!import.meta.env.VITE_PARSE_APP_ID) {
-  throw new Error("No parse credentials...");
-}
-Parse.serverURL = import.meta.env.VITE_PARSE_SERVER_URL;
 Parse.initialize(
-  import.meta.env.VITE_PARSE_APP_ID,
-  import.meta.env.VITE_PARSE_JS_KEY,
+  "NQRBNG65tysLi8lBaYBL571QCq68522DQZuPVcLP", //appID
+  "59wvSMXThKvuZb704q3F0bT8q5mRZjjxpyQcfso3", //JavascriptKey
 );
+Parse.serverURL = "https://parseapi.back4app.com"; //api url
 
 function App() {
   const [user, setUser] = useState(Parse.User.current());

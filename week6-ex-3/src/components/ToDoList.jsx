@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import TodoItem from "./TodoItem.jsx";
 import NewListForm from "./NewListForm.jsx";
 import {
-  fetchTodos,
   createTodo,
   setTodoDone,
   deleteTodo,

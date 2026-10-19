@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import TodoItem from "./TodoItem.jsx";
 import NewListForm from "./NewListForm.jsx";
 import {
-  createTodo,
   setTodoDone,
   deleteTodo,
   fetchTodosForList,
@@ -31,11 +30,6 @@ export default function ToDoList({ userID, userName }) {
     }
     load();
   }, [userID]);
-
-  async function handleAdd(newTask, list) {
-    const created = await createTodo(newTask, list);
-    setTodoList([...todoList, created]);
-  }
 
   async function handleAddList(name) {
     const created = await createList(name);

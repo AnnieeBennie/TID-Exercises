@@ -55,7 +55,7 @@ export default function ToDoList({ userID, userName }) {
 
       <NewListForm onAdd={handleAddList} />
       {lists.length === 0 ? (
-        <p>Nothing here yet.</p>
+        <p>Nothidkkdkng here yet.</p>
       ) : (
         <ul>
           {lists.map((list) => (

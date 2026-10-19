@@ -1,0 +1,48 @@
+* {
+  font-family: "Lato", sans-serif;
+}
+
+body {
+  background-color: #ffd391;
+  padding: 16px;
+}
+
+.main-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #ffd391;
+}
+
+.todo-body {
+  box-sizing: border-box;
+  background-color: white;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  border-radius: 16px;
+  box-shadow: 0 0 4rem #0000001f;
+}
+
+button {
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #b4b4b4;
+  background: #d5d5d5;
+}
+
+#add-btn {
+  border: 1px solid #005cd4;
+  background: #1b7bfa;
+  color: white;
+}
+
+ul {
+  padding-left: 0.5rem;
+  list-style-type: none;
+}
+
+ul > li {
+  margin: 0.5rem 0;
+}

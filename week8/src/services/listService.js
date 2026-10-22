@@ -12,6 +12,11 @@ export async function createList(name) {
 
   return await list.save();
 }
+export async function loadList(listId) {
+  const query = new Parse.Query(List);
+  return await query.get(listId);
+}
+
 export async function fetchLists() {
   const query = new Parse.Query(List);
   query.equalTo("owner", Parse.User.current());

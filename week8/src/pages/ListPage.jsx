@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Parse from "parse";
 import NewTodoForm from "../components/NewTodoForm.jsx";
 
 import TodoItem from "../components/TodoItem.jsx";
 import { fetchTodosForList, createTodo } from "../services/todoService.js";
-
-const List = Parse.Object.extend("List");
+import { loadList } from "../services/listService.js";
 
 export default function ListPage() {
   const { listId } = useParams();
@@ -16,8 +14,7 @@ export default function ListPage() {
 
   useEffect(() => {
     async function load() {
-      const listQuery = new Parse.Query(List);
-      const list = await listQuery.get(listId);
+      const list = await loadList(listId);
 
       const todos = await fetchTodosForList(list);
 
